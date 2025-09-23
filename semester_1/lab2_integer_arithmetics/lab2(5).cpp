@@ -1,9 +1,10 @@
 #include<iostream>
-int main() 
+int main()
 {
 	int n, paln = 0, sqrn = 0, palSqrn = 0, l = 0, num = 0;
 	std::cout << "enter natural number: ";
 	std::cin >> n;
+
 	if (n > 0)
 	{
 		std::cout << "doube palindrome numbers: ";
@@ -25,6 +26,10 @@ int main()
 				l = l / 10;
 			}
 
+			if (paln == i && sqrn == palSqrn) std::cout << paln << " ";
+			i++;
+			paln = 0;
+			sqrn = 0;
 		}
 	}
 	else { std::cout << "ERROR!!!"; }
