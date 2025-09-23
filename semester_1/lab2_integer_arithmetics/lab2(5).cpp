@@ -5,7 +5,7 @@ int main()
 	std::cout << "enter natural number: ";
 	std::cin >> n;
 	std::cout << "doube palindrome numbers: ";
-	for (int i = 1; (i <= n);)
+	for (int i = 1; (i < n);)
 	{	l = i;
 	while (l != 0)
 		{	num = l % 10;
