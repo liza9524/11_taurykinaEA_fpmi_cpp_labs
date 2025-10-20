@@ -2,8 +2,8 @@
 
 int main()
 {
-    int arr[1000], sumaft = 0, sumbef = 0, j = 0, i, upper_board, lower_board, n, change, left_board=0, right_board, compare = 11110;;
-    bool how;
+    int arr[1000], sumaft = 0, sumbef = 0, upper_board, lower_board, change, left_board = 0, right_board, compare = 11110, max;
+        int how, j = 0, i,n;
 
     std::cout << "Enter the amount of elemens: ";
     std::cin >> n;
@@ -45,11 +45,11 @@ int main()
     }
 
     //task 20.1
+    int num;
     for ((i = 0); (i < n); i++)
     {
         sumaft += arr[i];
     }
-
     sumaft -= arr[0];
 
     for ((i = 1); (i < n); i++)
@@ -61,28 +61,29 @@ int main()
         if (abs(j) <= compare)
         {
             compare = abs(j);
-            left_board = i + 1;
+           num = i + 1;
         }
-
     }
-    std::cout << std::endl << left_board << std::endl;
+    std::cout << std::endl <<"the number of element that the sum of the elements before it differs the least from the sum of the elements after it is " << num << std::endl;
 
     //task 20.2
-    left_board = arr[0];
+     max = arr[0];
     for (i = 1; (i <= n); i++)
-        if (left_board < arr[i])
+        if (max < arr[i])
         {
-            left_board = arr[i];
+            max = arr[i];
             j = i;
         }
-    std::cout << left_board << " " << (j + 1) << std::endl;
+    std::cout <<"the biggest element is "<< max << std::endl << " the number of the biggest element is " << (j + 1) << std::endl;
 
 
     //extra
 
     j = 0;
-    std::cout << "enter boards of  section";
-    std::cin >> left_board >> right_board;
+    std::cout << "enter lower board of  section";
+    std::cin >> left_board;
+    std::cout << "enter upper board of  section";
+    std::cin >> right_board;
     if (left_board > right_board)
     {
         change = left_board;
@@ -90,20 +91,22 @@ int main()
         right_board = change;
     }
 
-    size_t k = 0;
+    int k = 0;
 
-    for (size_t i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        if (not (left_board <= arr[i] && arr[i] <= right_board))
+        if (!(left_board <= arr[i] && arr[i] <= right_board))
         {
             if (i != k) arr[k] = arr[i];
             ++k;
         }
     }
 
-    for (size_t i = k; i < n; i++) arr[i] = 0;
+    for (int i = k; i < n; i++) 
+        arr[i] = 0;
 
-    for (size_t i = 0; i < n; i++) std::cout << arr[i] << ' ';
+    for (int i = 0; i < n; i++) 
+        std::cout << arr[i] << ' ';
 
 
 

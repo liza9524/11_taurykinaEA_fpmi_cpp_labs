@@ -4,7 +4,7 @@
 int main()
 {
     int* arr = new int[1000];
-    int sumaft = 0, sumbef = 0, j = 0, i, upper_board, lower_board, n, change, a = 0, min, sum = 0, abss = 0;
+    int sumaft = 0, sumbef = 0, j = 0, i, upper_board, lower_board, n, change, a = 0, min, sum = 0, AbsNum = 0;
     int how;
 
     std::cout << "Enter the amount of elemens: ";
@@ -51,8 +51,6 @@ int main()
 
     //task 38.2
 
-
-
     for (i = 1; (i <= n); i++)
         if (arr[i] == 0)
         {
@@ -65,15 +63,18 @@ int main()
             a = i;
             break;
         }
-    if (j == a) return 0;
+    if (j == a)  
+        std::cout << "This action cannot be performed on this array" << std::endl;
     else
     {
         for ((i = j); (i < a); i++)
         {
             sum += arr[i];
         }
+        std::cout << std::endl << "sum of elements between 0s is " << sum;
     }
-    std::cout << std::endl << sum << std::endl;
+    std::cout << std::endl;
+
 
 
     //extra
@@ -87,114 +88,62 @@ int main()
                 arr[j] = min;
             }
 
-    } for (i = 0; i < n; i++)  std::cout << arr[i] << " ";
+    } 
+    std::cout << "transformed array: ";
+    for (i = 0; i < n; i++)
+    {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
 
 
     //task 38.1
-    min = arr[0];
+   
     for (i = 0; i < n; i++)
     {
         for (j = i + 1; j < n; j++)
-            if (arr[i] > arr[j])
+            if (arr[i] < arr[j])
             {
                 min = arr[i];
                 arr[i] = arr[j];
                 arr[j] = min;
             }
     }
-    for (i = 0; i < n; i++)
-        std::cout << arr[i] << " ";
 
-    std::cout << std::endl;
-
-    int* counter = new int[10000];
-    for (i = 0; i <= arr[n - 1]; i++)
-    {
-        abss = arr[i] + abs(arr[0]);
-        counter[abss] = 0;
-    }
+    int* counter = new int[1000] {};
 
 
     for (i = 0; i < n; i++)
+	{
+		AbsNum = arr[i]+abs(arr[n-1]);
+		counter[AbsNum]++;
+	}
+
+
+	min = 1000;
+	for (i = 0; i < n; i++)
+	{
+		AbsNum = arr[i] + abs(arr[n - 1]);
+	        if((min>counter[AbsNum])&&(counter[AbsNum]!=0))
+                 min=counter[AbsNum];
+	    if (min == 1) break;
+	}
+
+	std::cout<< std::endl;
+
+
+    for (i = 0; i < n; i++)
     {
-        abss = arr[i] + abs(arr[0]);
-        counter[abss]++;
-    }
-
-
-
-    for (i = arr[0]; i <= arr[n - 1]; i++)
-    {
-        abss = arr[i] + abs(arr[0]);
-        if ((counter[abss] < min) && (counter[abss] > 0))
-            min = counter[abss];
-    }
-
-
-    for (i = n - 1; i >= 0; i--)
-    {
-        if (counter[abss] == min)
+        AbsNum = arr[i] + abs(arr[n - 1]);
+       
+        if (counter[AbsNum] == min)
         {
-            std::cout << "the biggest element is " << arr[i];
+
+            std::cout <<"the biggest element which occurs less often is "<< arr[i];
             break;
         }
     }
-
-
-
-    //task 38.1
-    min = arr[0];
-    for (i = 0; i < n; i++)
-    {
-        for (j = i + 1; j < n; j++)
-            if (arr[i] > arr[j])
-            {
-                min = arr[i];
-                arr[i] = arr[j];
-                arr[j] = min;
-            }
-    }
-    for (i = 0; i < n; i++)
-        std::cout << arr[i] << " ";
-
-    std::cout << std::endl;
-
-    int* counter = new int[10000];
-    for (i = 0; i <= arr[n - 1]; i++)
-    {
-        abss = arr[i] + abs(arr[0]);
-        counter[abss] = 0;
-    }
-
-
-    for (i = 0; i < n; i++)
-    {
-        abss = arr[i] + abs(arr[0]);
-        counter[abss]++;
-    }
-
-
-
-    for (i = arr[0]; i <= arr[n - 1]; i++)
-    {
-        abss = arr[i] + abs(arr[0]);
-        if ((counter[abss] < min) && (counter[abss] > 0))
-            min = counter[abss];
-    }
-
-
-    for (i = n - 1; i >= 0; i--)
-    {
-        if (counter[abss] == min)
-        {
-            std::cout << "the biggest element is " << arr[i];
-            break;
-        }
-    }
-
-
-
-
 
 
     delete[] arr;
