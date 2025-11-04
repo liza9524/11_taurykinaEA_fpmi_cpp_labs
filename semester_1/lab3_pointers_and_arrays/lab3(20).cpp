@@ -6,7 +6,7 @@ void DeleteElements(int* arr, int n, int left_board, int right_board);
 
 int main()
 {
-    int arr[1000], sumaft = 0, sumbef = 0, j = 0, i, upper_board, lower_board, n, change, left_board = 0, right_board, compare = 11110;;
+    int arr[1000], i, upper_board, lower_board, n, temp, left_board, right_board;
     bool how;
 
     std::cout << "Enter the amount of elemens: ";
@@ -32,9 +32,9 @@ int main()
         std::cin >> upper_board;
         if (lower_board > upper_board)
         {
-            change = lower_board;
+            temp = lower_board;
             lower_board = upper_board;
-            upper_board = change;
+            upper_board = temp;
         }
         for ((i = 0); (i < n); i++)
         {
@@ -50,13 +50,14 @@ int main()
 
     //task 20.1
 
-    std::cout << std::endl << Sum(arr, n) << std::endl;
+    std::cout << std::endl << "number of element such that sum of elements before it differs leats from the sum of el after it is " << Sum(arr, n) << std::endl;
     //task 20.2
 
     Max(arr, n);
 
     //extra
-
+    std::cout << "enter segment boards ";
+    std::cin >> left_board >> right_board;
     DeleteElements(arr, n, left_board, right_board);
 
 
@@ -98,13 +99,13 @@ void Max(int* arr, int n) {
             max = arr[i];
             num = i;
         }
-    std::cout << max << " " << (num + 1) << std::endl;
+    std::cout << "max element is " << max << " " << "number of max element is " << (num + 1) << std::endl;
 }
 
 void DeleteElements(int* arr, int n, int left_board, int right_board) {
-    size_t k = 0;
+    int k = 0;
 
-    for (size_t i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         if (not (left_board <= arr[i] && arr[i] <= right_board))
         {
@@ -113,8 +114,8 @@ void DeleteElements(int* arr, int n, int left_board, int right_board) {
         }
     }
 
-    for (size_t i = k; i < n; i++) arr[i] = 0;
+    for (int i = k; i < n; i++) arr[i] = 0;
 
-    for (size_t i = 0; i < n; i++) std::cout << arr[i] << ' ';
+    for (int i = 0; i < n; i++) std::cout << arr[i] << " ";
 }
 

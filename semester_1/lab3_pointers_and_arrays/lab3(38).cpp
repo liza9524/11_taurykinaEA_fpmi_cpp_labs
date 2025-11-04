@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-int Sum(int* arr, int n);
+void SumBetweenZeros(int* arr, int n);
 void TransformArray(int* arr, int n);
 
 
@@ -9,7 +9,7 @@ int MaxEl(int* arr, int n);
 int main()
 {
     int* arr = new int[1000];
-    int sumaft = 0, sumbef = 0, j = 0, i, upper_board, lower_board, n, change, a = 0, min, sum = 0, AbsNum = 0;
+    int  i, upper_board, lower_board, n, temp;
     int how;
 
     std::cout << "Enter the amount of elemens: ";
@@ -35,9 +35,9 @@ int main()
         std::cin >> upper_board;
         if (lower_board > upper_board)
         {
-            change = lower_board;
+            temp = lower_board;
             lower_board = upper_board;
-            upper_board = change;
+            upper_board = temp;
         }
         for ((i = 0); (i < n); i++)
         {
@@ -56,7 +56,7 @@ int main()
 
     //task 38.2
 
-    std::cout << Sum(arr, n);
+    SumBetweenZeros(arr, n);
 
     std::cout << std::endl;
     //extra
@@ -73,7 +73,8 @@ int main()
     return 0;
 }
 
-int Sum(int* arr, int n) {
+void SumBetweenZeros(int* arr, int n)
+{
     int i, j = 0, a = 0, sum = 0;
     for (i = 1; (i <= n); i++)
         if (arr[i] == 0)
@@ -87,9 +88,9 @@ int Sum(int* arr, int n) {
             a = i;
             break;
         }
-    if (j == a) {
+    if (j == a)
+    {
         std::cout << "This action cannot be performed on this array" << std::endl;
-        return 0;
     }
     else
     {
@@ -97,10 +98,9 @@ int Sum(int* arr, int n) {
         {
             sum += arr[i];
         }
-        std::cout << std::endl << "sum of elements between 0s is ";
+        std::cout << std::endl << "sum of elements between 0s is " << sum;
     }
-    std::cout << std::endl;
-    return sum;
+
 }
 
 
