@@ -2,7 +2,7 @@
 #include <string>
 #include <cstring>
 using namespace std;
-bool isnum(const string& s, int a, int b)
+bool isnum(string s, int a, int b)
 {
 	for (int i = a; i < b; i++)
 	{
@@ -14,25 +14,26 @@ bool isnum(const string& s, int a, int b)
 	return true;
 }
 
-string FindEvenNums(const string& s)
+string FindEvenNums(string s)
 {
-	const string punkmarks = ".,!?;:- ";
-	int first_punk = 0;
-	int the_lastest = s.find_last_of(punkmarks), last_punk = the_lastest;
+	const string punkmarks = " _ { } [ ] # ( ) < > % : ; ? * + - / ^ & | ~ ! ";
+	int first_punk = -1;
+	int last_punk = s.find_last_of(punkmarks);
 	string res = "";
 	do
 	{
 		last_punk = s.find_first_of(punkmarks, first_punk + 1);
-		(last_punk < 0) ? (last_punk = s.size() - 2) : (last_punk);
+		if (last_punk < 0)
+		{
+			last_punk = s.size() - 1;
+		}
 		if (isnum(s, first_punk + 1, last_punk))
 		{
-			if ((s[last_punk - 1] = '2') || (s[last_punk - 1] = '4') || (s[last_punk - 1] = '6') || (s[last_punk - 1] = '8') || (s[last_punk - 1] = '0'))
+			if ((s[last_punk - 1] == '2') || (s[last_punk - 1] == '4') || (s[last_punk - 1] == '6') || (s[last_punk - 1] == '8') || (s[last_punk - 1] == '0'))
 			{
-				for (int i = first_punk; i < last_punk; i++)
+				for (int i = first_punk + 1; i < last_punk; i++)
 				{
-					cout << "bob ";
 					res += s[i];
-
 				}
 				res += ",,";
 			}
@@ -40,16 +41,19 @@ string FindEvenNums(const string& s)
 		first_punk = last_punk;
 
 	} while (last_punk > 0);
-	if (res == "") return "no even nums";
-	else return res;
 
+	if (res == "")
+	{
+		return "no even nums";
+	}
+
+	return res;
 }
 
 int main()
 {
 	string offer;
 	getline(cin, offer);
-
 	cout << "vynik: " << FindEvenNums(offer);
 
 	return 0;
