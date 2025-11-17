@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cmath>
-void SumBetweenZeros(int* arr, int n);
+int FindSumBetweenZeros(int* arr, int n);
 void TransformArray(int* arr, int n);
 
 
-int MaxEl(int* arr, int n);
+void FindMaxElement(int* arr, int n);
 
 int main()
 {
@@ -16,125 +16,134 @@ int main()
     std::cin >> n;
 
     if ((n <= 0) || (n > 1000)) return 0;
-    std::cout << "enter 0, if the elements of array are entered randomly" << std::endl << "Enter 1 if the elements of array are entered by hand ";
+    std::cout << "enter 0, if the elements of array are entered randomly" << std::endl << "Enter 1 if the elements of array are entered by hand" << std::endl;
 
     std::cin >> how;
-    if (how == 1)
+    switch (how)
     {
-        for ((i = 0); (i < n); i++)
+    case(1):
+
+        for (int i = 0; i < n; i++)
         {
             std::cout << "enter the element number" << (i + 1) << " ";
             std::cin >> arr[i];
         }
-    }
-    else if (how == 0)
-    {
-        std::cout << "Enter the lower board of array: ";
+        break;
+
+    case(0):
+
+        std::cout << "Enter the lower board of array";
         std::cin >> lower_board;
-        std::cout << "Enter the upper board of array: ";
+        std::cout << "Enter the upper board of array";
         std::cin >> upper_board;
         if (lower_board > upper_board)
         {
-            temp = lower_board;
+            int temp = lower_board;
             lower_board = upper_board;
             upper_board = temp;
         }
-        for ((i = 0); (i < n); i++)
+        for (int i = 0; i < n; i++)
         {
             arr[i] = lower_board + rand() % (upper_board - lower_board);
             std::cout << arr[i] << " ";
         }
-    }
-    else
-    {
-        std::cout << "ONLY 1 OR 0!!!";
+        break;
+
+    default:
+
+        std::cout << "ONLY 1 OR 0";
         return 0;
+
     }
 
     std::cout << std::endl;
-
-
     //task 38.2
-
-    SumBetweenZeros(arr, n);
-
+    try {
+        std::cout << "sum of elements between zeros is " << FindSumBetweenZeros(arr, n);
+    }
+    catch (const char* ErrorMessage) {
+        std::cout << ErrorMessage;
+    }
     std::cout << std::endl;
     //extra
     TransformArray(arr, n);
 
     std::cout << std::endl;
     //task 38.1
-
-
-    std::cout << "the biggest element which occurs less often is " << MaxEl(arr, n);
+    FindMaxElement(arr, n);
 
     delete[] arr;
     arr = nullptr;
     return 0;
 }
 
-void SumBetweenZeros(int* arr, int n)
+int FindSumBetweenZeros(int* arr, int n)
 {
-    int i, j = 0, a = 0, sum = 0;
-    for (i = 1; (i <= n); i++)
+    int  FirstZeroIndex = -1, LastZeroIndex = -1, sum = 0;
+    for (int i = 0; i < n; i++)
         if (arr[i] == 0)
         {
-            j = i;
+            FirstZeroIndex = i;
             break;
         }
-    for (i = n; (i >= 0); i--)
+    for (int i = n - 1; i >= FirstZeroIndex; i--)
         if (arr[i] == 0)
         {
-            a = i;
+            LastZeroIndex = i;
             break;
         }
-    if (j == a)
+    if ((FirstZeroIndex == -1) && (LastZeroIndex == -1))
     {
-        std::cout << "This action cannot be performed on this array" << std::endl;
+        throw "Error! No zero in the array";
+        return 0;
     }
-    else
+    if (FirstZeroIndex == LastZeroIndex)
     {
-        for ((i = j); (i < a); i++)
-        {
-            sum += arr[i];
-        }
-        std::cout << std::endl << "sum of elements between 0s is " << sum;
+        throw "Error! Only one zero in the array";
+        return 0;
+    }
+    if (LastZeroIndex - FirstZeroIndex == 1)
+    {
+        throw "Error! No elements between zeros";
+        return 0;
     }
 
+    for (int i = FirstZeroIndex; i < LastZeroIndex; i++)
+    {
+        sum += arr[i];
+    }
+
+    return sum;
 }
 
 
-void TransformArray(int* arr, int n) {
-    int i, min = 0, j;
-    for (i = 0; i < n; i++)
+void TransformArray(int* arr, int n)
+{
+    for (int i = 0; i < n; i++)
     {
-        for (j = i + 1; j < n; j++)
+        for (int j = i + 1; j < n; j++)
             if ((arr[i] < 0) && (arr[j] >= 0))
             {
-                min = arr[i];
-                arr[i] = arr[j];
-                arr[j] = min;
+                std::swap(arr[i], arr[j]);
             }
 
     }
     std::cout << "transformed array: ";
-    for (i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         std::cout << arr[i] << " ";
     }
 }
 
 
-int MaxEl(int* arr, int n) {
-    int i, j, AbsNum, min;
+void FindMaxElement(int* arr, int n) {
+    int i, PositiveIndex, MinMultiplicity;
     for (i = 0; i < n; i++)
     {
-        for (j = i + 1; j < n; j++)
+        for (int j = i + 1; j < n; j++)
             if (arr[i] < arr[j])
             {
-                min = arr[i];
-                arr[i] = arr[j];
-                arr[j] = min;
+                std::swap(arr[i], arr[j]);
             }
     }
 
@@ -143,31 +152,29 @@ int MaxEl(int* arr, int n) {
 
     for (i = 0; i < n; i++)
     {
-        AbsNum = arr[i] + abs(arr[n - 1]);
-        counter[AbsNum]++;
+        PositiveIndex = arr[i] + abs(arr[n - 1]);
+        counter[PositiveIndex]++;
     }
 
 
-    min = 1000;
+    MinMultiplicity = 1000;
     for (i = 0; i < n; i++)
     {
-        AbsNum = arr[i] + abs(arr[n - 1]);
-        if ((min > counter[AbsNum]) && (counter[AbsNum] != 0))
-            min = counter[AbsNum];
-        if (min == 1) break;
+        PositiveIndex = arr[i] + abs(arr[n - 1]);
+        if ((MinMultiplicity > counter[PositiveIndex]) && (counter[PositiveIndex] != 0))
+            MinMultiplicity = counter[PositiveIndex];
+        if (MinMultiplicity == 1) break;
     }
 
-    std::cout << std::endl;
 
 
     for (i = 0; i < n; i++)
     {
-        AbsNum = arr[i] + abs(arr[n - 1]);
+        PositiveIndex = arr[i] + abs(arr[n - 1]);
 
-        if (counter[AbsNum] == min)
+        if (counter[PositiveIndex] == MinMultiplicity)
         {
-
-            return arr[i];
+            std::cout << "the biggest element which occurs " << counter[PositiveIndex] << " times is " << arr[i];
             delete[] counter;
             counter = nullptr;
             break;
