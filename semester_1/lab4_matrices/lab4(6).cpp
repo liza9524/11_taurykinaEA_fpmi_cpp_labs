@@ -1,94 +1,107 @@
 #include <iostream>
 #include<iomanip>
-int Sum(int** a, int n, int m);
-void reverseCol(int** arr, int columns, int strings);
-
+int FindSum(int** a, int n, int m);
+void ReverseColumns(int** arr, int columns, int strings);
+void PrintArray(int** arr, int columns, int strings);
 
 int main()
 {
-    int j = 0, i = 0, upper_board, lower_board, strings, columns, temp = 0, how;
+    int  cols, strings, how;
 
-    std::cout << "Enter the number of columns";
-    std::cin >> columns;
-    std::cout << "Enter the number of strings";
+    std::cout << "Enter the number of strings: ";
     std::cin >> strings;
-    int** arr = new int* [columns];
-    for (i = 0; i < columns; i++)
-        arr[i] = new int[strings];
-    if ((strings <= 0) || (strings > 1000) || (columns <= 0) || (columns > 1000)) return 0;
+    std::cout << "Enter the number of columns: ";
+    std::cin >> cols;
+    int** arr = new int* [strings];
+    for (int i = 0; i < strings; i++)
+        arr[i] = new int[cols];
+    if ((cols <= 0) || (cols > 1000) || (strings <= 0) || (strings > 1000))
+    {
+        std::cout << "Wrong input!";
+        return 0;
+    }
     std::cout << "enter 0, if the elements of array are entered randomly" << std::endl << "Enter 1 if the elements of array are entered by hand ";
 
     std::cin >> how;
-    if (how == 1)
+    switch (how)
     {
-        for ((i = 0); (i < columns); i++)
+    case 1:
+
+        for (int i = 0; i < strings; i++)
         {
-            for ((j = 0); (j < strings); j++) {
-                std::cout << "enter the element number" << (i + 1) << " " << j + 1 << " ";
+            for (int j = 0; j < cols; j++) {
+                std::cout << "enter the element from " << i + 1 << " colum at position " << j + 1 << " ";
                 std::cin >> arr[i][j];
             }
         }
-    }
-    else if (how == 0)
-    {
+        break;
+
+    case 0:
+        int upper_board, lower_board, temp;
         std::cout << "Enter the lower board of array";
         std::cin >> lower_board;
         std::cout << "Enter the upper board of array";
         std::cin >> upper_board;
         if (lower_board > upper_board)
         {
-            temp = lower_board;
-            lower_board = upper_board;
-            upper_board = temp;
+            std::swap(lower_board, upper_board);
         }
-        for ((i = 0); (i < columns); i++)
+        for (int i = 0; i < strings; i++)
         {
-            for ((j = 0); (j < strings); j++)
+            for (int j = 0; j < cols; j++)
                 arr[i][j] = lower_board + rand() % (upper_board - lower_board);
 
         }
-        for ((i = 0); (i < columns); i++)
-        {
-            for ((j = 0); (j < strings); j++)
-            {
-                std::cout << std::setw(3) << arr[i][j] << " ";
-            }std::cout << std::endl;
-        }
-    }
 
-    else
-    {
+        break;
+
+
+    default:
+
         std::cout << "ONLY 1 OR 0";
         return 0;
+
     }
-    std::cout << std::endl;
+    PrintArray(arr, strings, cols);
     //6.1
 
-    std::cout << "sum of elements is " << Sum(arr, columns, strings);
+    std::cout << "sum of elements in strings without zeros is " << FindSum(arr, strings, cols);
     std::cout << std::endl;
     //6.2 
-    reverseCol(arr, columns, strings);
+    ReverseColumns(arr, strings, cols);
 
-    for (i = 0; i < columns; i++)
+    for (int i = 0; i < strings; i++)
         delete[] arr[i];
     delete[] arr;
     arr = nullptr;
     return 0;
 }
-
-int Sum(int** a, int n, int m) {
+void PrintArray(int** arr, int columns, int strings)
+{
+    for (int i = 0; i < columns; i++)
+    {
+        for (int j = 0; j < strings; j++)
+        {
+            std::cout << std::setw(3) << arr[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+int FindSum(int** a, int n, int m)
+{
     int sum = 0;
     for (int i = 0; i < n; i++)
     {
-        int k = 0;
+        int flag = 0;
         for (int j = 0; j < m; j++)
         {
             if (a[i][j] == 0)
             {
-                k = 1;
+                flag = 1;
+                break;
             }
         }
-        if (k != 1)
+        if (flag != 1)
         {
             for (int j = 0; j < m; j++)
             {
@@ -99,31 +112,19 @@ int Sum(int** a, int n, int m) {
     return sum;
 }
 
-void reverseCol(int** arr, int columns, int strings)
+void ReverseColumns(int** arr, int columns, int strings)
 {
-    int i, temp = 0, j, k;
-    for ((i = 0); (i < columns); i++)
+    int i, temp = strings / 2, j, k;
+    for (int i = 0; i < columns; i++)
     {
         k = strings - 1;
-
-        for ((j = 0); (j < strings / 2); j++)
+        for (int j = 0; j < temp; j++)
         {
-            temp = arr[i][j];
-            arr[i][j] = arr[i][k];
-            arr[i][k] = temp;
-
+            std::swap(arr[i][j], arr[i][k]);
             k--;
         }
 
     }
-
-    for ((i = 0); (i < columns); i++)
-    {
-        for ((j = 0); (j < strings); j++)
-        {
-            std::cout << std::setw(3) << arr[i][j] << " ";
-        }
-        std::cout << std::endl;
-
-    }
+    std::cout << "Transformed Array: " << std::endl;
+    PrintArray(arr, columns, strings);
 }

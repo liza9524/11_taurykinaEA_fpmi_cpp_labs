@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-using namespace std;
-bool isnum(string s, int a, int b)
+bool IsNumber(std::string s, int a, int b)
 {
-	for (int i = a; i < b; i++)
+	for (int i = a + 1; i < b; i++)
 	{
 		if (!isdigit(s[i]))
 		{
@@ -14,33 +13,51 @@ bool isnum(string s, int a, int b)
 	return true;
 }
 
-string FindEvenNums(string s)
+std::string FindEvenNums(std::string s)
 {
-	const string punkmarks = " _ { } [ ] # ( ) < > % : ; ? * + - / ^ & | ~ ! ";
+	const std::string punkmarks = ":;?-!., ";
 	int first_punk = -1;
-	int last_punk = s.find_last_of(punkmarks);
-	string res = "";
-	do
+	int last_punk = -1;
+	std::string res = "";
+	while (last_punk != s.find_last_of(punkmarks))
 	{
 		last_punk = s.find_first_of(punkmarks, first_punk + 1);
-		if (last_punk < 0)
-		{
-			last_punk = s.size() - 1;
-		}
-		if (isnum(s, first_punk + 1, last_punk))
+
+		if (IsNumber(s, first_punk, last_punk))
 		{
 			if ((s[last_punk - 1] == '2') || (s[last_punk - 1] == '4') || (s[last_punk - 1] == '6') || (s[last_punk - 1] == '8') || (s[last_punk - 1] == '0'))
 			{
+				if (!res.empty())
+				{
+					res += ",,";
+				}
 				for (int i = first_punk + 1; i < last_punk; i++)
 				{
 					res += s[i];
 				}
-				res += ",,";
 			}
 		}
 		first_punk = last_punk;
 
-	} while (last_punk > 0);
+	}
+
+	last_punk = s.size();
+
+	if (IsNumber(s, s.find_last_of(punkmarks), last_punk))
+	{
+		if ((s[last_punk - 1] == '2') || (s[last_punk - 1] == '4') || (s[last_punk - 1] == '6') || (s[last_punk - 1] == '8') || (s[last_punk - 1] == '0'))
+		{
+
+			if (!res.empty())
+			{
+				res += ",,";
+			}
+			for (int i = first_punk + 1; i < last_punk; i++)
+			{
+				res += s[i];
+			}
+		}
+	}
 
 	if (res == "")
 	{
@@ -52,9 +69,10 @@ string FindEvenNums(string s)
 
 int main()
 {
-	string offer;
-	getline(cin, offer);
-	cout << "vynik: " << FindEvenNums(offer);
+	std::string offer;
+	std::cout << "enter the string: ";
+	getline(std::cin, offer);
+	std::cout << "result: " << FindEvenNums(offer);
 
 	return 0;
 }
