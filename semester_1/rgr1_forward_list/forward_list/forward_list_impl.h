@@ -39,8 +39,9 @@ public:
             return retval;
         }
 
-        bool operator==(const ForwardListIterator& other) const {
-            // your code goes here
+        bool operator==(const ForwardListIterator& other) const 
+        {
+            return  (position_ == other.position_);
         }
 
         bool operator!=(const ForwardListIterator& other) const {
@@ -54,28 +55,32 @@ public:
         pointer operator->() {
             return &position_->value_;
         }
-        
+
     private:
         Node* position_;
     };
 
     // methods for "ranged-based for loop"
     // 1) non-const version
-    ForwardListIterator begin() {
-        // your code goes here
+    ForwardListIterator begin() 
+    {
+        return ForwardListIterator(begin_);
     }
-    ForwardListIterator end() {
-        // your code goes here
+    ForwardListIterator end() 
+    {
+        return ForwardListIterator(nullptr);
     }
 
     // 2) const version
     // TODO: think about return type
     // (is it exactly ForwardListIterator?)
-    ForwardListIterator begin() const {
-        // your code goes here
+    ForwardListIterator begin() const 
+    {
+        return ForwardListIterator(begin_);
     }
-    ForwardListIterator end() const {
-        // your code goes here
+    ForwardListIterator end() const 
+    {
+        return ForwardListIterator(nullptr);
     }
 
     // default constructor
@@ -96,6 +101,7 @@ public:
     // destructor
     ~ForwardList();
 
+    void PushBack(int32_t value);
     // insert new element on the top of the list
     void PushFront(int32_t value);
 
@@ -125,5 +131,6 @@ public:
     size_t Size() const;
 
 private:
-    // your code goes here
+    Node* begin_;
+    size_t size_;
 };
