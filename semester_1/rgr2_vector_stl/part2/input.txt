@@ -1,0 +1,9 @@
+52 0 Smalyavichi 10 52 0 40
+44 1 Maladzechna 4 17 2 5
+67 2 Baranavichi 7 6 1 35
+42 4 Talachyn 8 59 1 49
+6 3 Minsk 14 0 5 8
+2 3 Smalyavichi 11 53 3 44
+4 0 Maladzechna 17 47 3 55
+7 2 Baranavichi 19 32 6 48
+5 4 Talachyn 23 25 4 44
