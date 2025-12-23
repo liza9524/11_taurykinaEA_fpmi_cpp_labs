@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS6
 #include "time_utility.h"
 
 #include <cassert>
