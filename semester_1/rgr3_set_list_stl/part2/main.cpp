@@ -37,22 +37,22 @@ struct Book {
 
 Book ReadDataFromString(const std::string& line) {
     Book book;
-    std::istringstream iss(line);
+    std::istringstream f(line);
 
-    iss >> book.number;
+    f >> book.number;
 
-    iss >> book.title;
+    f >> book.title;
 
     int authorCount;
-    iss >> authorCount;
+    f >> authorCount;
 
     for (int i = 0; i < authorCount; ++i) {
         Author author;
-        iss >> author.surname >> author.name >> author.patronymic;
+        f >> author.surname >> author.name >> author.patronymic;
         book.authors.push_back(author);
     }
 
-    iss >> book.year;
+    f >> book.year;
 
     book.authors.sort();
 
